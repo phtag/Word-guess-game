@@ -18,25 +18,38 @@
             <div class="col-sm-6 my-border-column-left">
             </div>
             <div class="col-sm-6 my-border-column-right">
-                <h3>Press r, p, or s to play rock-paper-scissors</h1>
+                <h3>Press any key to start playing</h1>
                 <div class="my-scoreboard-section">
-                        <br>Wins:  <span id="wins-text"><strong>...Nothing.</strong></span></br>
-                        <br>Losses:  <span id="losses-text"><strong>...Nothing.</strong></span></br>
-                        <br>Ties:  <span id="ties-text"><strong>...Nothing.</strong></span></br>
-                </div>                
+                    <br>Wins: <span id="wins-text"><strong>...Nothing.</strong></span></br>
+                    <br>Current word: </br>
+                    <span id="current-word"><strong>...Nothing.</strong></span></br>
+                    <br>Number of guesses remaining:  <span id="guesses-remaining"><strong>...Nothing.</strong></span></br>
+                    <br>Letters guessed: <span id="letters-guessed"><strong>...Nothing.</strong></span></br>
+                 </div>                
             </div>
         </div>
     </div>
      <script>
-
+        var UScityNames = [["c", "h", "i", "c", "a", "g", "o"],
+                        ["n", "e", "w", "", "y", "o", "r", "k"],
+                        ["b", "o", "s", "t", "o", "n"],
+                        ["a", "t", "l", "a", "n", "t", "a"]];
+                                                  
         var gameChoices = ["r", "p", "s"];
 
+        var currentWord = document.getElementById("current-word");
         var winsText = document.getElementById("wins-text");
-        var lossesText = document.getElementById("losses-text");
-        var tiesText = document.getElementById("ties-text");
+        var guessesRemaining = document.getElementById("guesses-remaining");
+        var lettersGuessed = document.getElementById("letters-guessed");
+        var cityIndex = Math.floor(Math.random() * UScityNames.length);
+        var numGuessesRemaining = 10;
+        currentWord.textContent="";
+        for (var j=0;j<UScityNames[cityIndex].length;j++) {
+            currentWord.textContent += "_ ";
+        }
         winsText.textContent = 0;
-        lossesText.textContent = 0;
-        tiesText.textContent = 0;
+        guessesRemaining.textContent = numGuessesRemaining;
+        lettersGuessed.textContent = UScityNames.length;
  
         var winsCount = 0;
         var lossesCount = 0;
