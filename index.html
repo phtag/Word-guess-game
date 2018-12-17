@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Archivo" rel="stylesheet">
+    <title>Word guess game</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  </head>
+  <body>
+      <header class="my-header">
+        Word Guess Game
+      </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 my-border-column-left">
+            </div>
+            <div class="col-sm-6 my-border-column-right">
+                <h3>Press r, p, or s to play rock-paper-scissors</h1>
+                <div class="my-scoreboard-section">
+                        <br>Wins:  <span id="wins-text"><strong>...Nothing.</strong></span></br>
+                        <br>Losses:  <span id="losses-text"><strong>...Nothing.</strong></span></br>
+                        <br>Ties:  <span id="ties-text"><strong>...Nothing.</strong></span></br>
+                </div>                
+            </div>
+        </div>
+    </div>
+     <script>
+
+        var gameChoices = ["r", "p", "s"];
+
+        var winsText = document.getElementById("wins-text");
+        var lossesText = document.getElementById("losses-text");
+        var tiesText = document.getElementById("ties-text");
+        winsText.textContent = 0;
+        lossesText.textContent = 0;
+        tiesText.textContent = 0;
+ 
+        var winsCount = 0;
+        var lossesCount = 0;
+        var tiesCount = 0;
+        
+        document.onkeyup = function(event) {
+            var userChoice, computerChoice;
+
+            userChoice=event.key;
+            computerChoice = gameChoices[Math.floor(Math.random() * gameChoices.length)];
+             if (userChoice == "r") {
+                if (computerChoice == "s") {
+                    winsCount++;
+                } else if (computerChoice == "r") {
+                    tiesCount++;
+                }
+                else if (computerChoice == "p") {
+                    lossesCount++;
+                }
+            }
+            else if (userChoice == "p") {
+                if (computerChoice == "s") {
+                    lossesCount++;
+                } else if (computerChoice == "r") {
+                    winsCount++;
+                }
+                else if (computerChoice == "p") {
+                    tiesCount++;
+                }
+            }
+            else if (userChoice == "s") {
+                if (computerChoice == "s") {
+                    tiesCount++;
+                } else if (computerChoice == "r") {
+                    lossesCount++;
+                }
+                else if (computerChoice == "p") {
+                    winsCount++;
+                }
+            }
+            winsText.textContent = winsCount;
+            lossesText.textContent = lossesCount;
+            tiesText.textContent = tiesCount;
+            console.log("user's choice=" + userChoice, "computer's choice=" + computerChoice, "user wins=" + winsCount, "user losses=" + lossesCount);
+        }
+    </script>
+   </body>
+</html>
