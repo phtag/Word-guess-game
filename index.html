@@ -11,17 +11,19 @@
   </head>
   <body>
       <header class="my-header">
-        Word Guess Game
+        Word Guess Game - US Cities
       </header>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 my-border-column-left">
+    <div class="container" >
+        <div class="row my-row">
+            <div class="col-sm-6 my-border-column-left" onclick="changeImage(this);">
+                <img id="left-column-image" src='assets/images/nature-q-c-627-480-2.jpg' style="width: 100%" >
+ 
             </div>
             <div class="col-sm-6 my-border-column-right">
                 <h3>Press any key to start playing</h1>
                 <div class="my-scoreboard-section">
                     <br>Wins: <span id="wins-text"><strong>...Nothing.</strong></span></br>
-                    <br>Current word: </br>
+                    <br>Current city: </br>
                     <span id="current-word"><strong>...Nothing.</strong></span></br>
                     <br>Number of guesses remaining:  <span id="guesses-remaining"><strong>...Nothing.</strong></span></br>
                     <br>Letters guessed: <span id="letters-guessed"><strong>...Nothing.</strong></span></br>
@@ -36,20 +38,22 @@
                         ["a", "t", "l", "a", "n", "t", "a"]];
                                                   
         var gameChoices = ["r", "p", "s"];
+        var currentCity_userGuesses = [""];
 
         var currentWord = document.getElementById("current-word");
         var winsText = document.getElementById("wins-text");
         var guessesRemaining = document.getElementById("guesses-remaining");
         var lettersGuessed = document.getElementById("letters-guessed");
+        var varImage = document.getElementById("left-column-image");
         var cityIndex = Math.floor(Math.random() * UScityNames.length);
-        var numGuessesRemaining = 10;
+         var numGuessesRemaining = 10;
         currentWord.textContent="";
         for (var j=0;j<UScityNames[cityIndex].length;j++) {
             currentWord.textContent += "_ ";
         }
         winsText.textContent = 0;
         guessesRemaining.textContent = numGuessesRemaining;
-        lettersGuessed.textContent = UScityNames.length;
+        lettersGuessed.textContent = "";
  
         var winsCount = 0;
         var lossesCount = 0;
@@ -58,7 +62,14 @@
         document.onkeyup = function(event) {
             var userChoice, computerChoice;
 
-            userChoice=event.key;
+             userChoice=event.key;
+            numGuessesRemaining--;
+            guessesRemaining.textContent = numGuessesRemaining;
+            if (lettersGuessed.textContent === "") {
+                lettersGuessed.textContent += userChoice;
+            } else {
+                lettersGuessed.textContent += ", " + userChoice;
+            }
             computerChoice = gameChoices[Math.floor(Math.random() * gameChoices.length)];
              if (userChoice == "r") {
                 if (computerChoice == "s") {
@@ -91,9 +102,17 @@
                 }
             }
             winsText.textContent = winsCount;
-            lossesText.textContent = lossesCount;
-            tiesText.textContent = tiesCount;
             console.log("user's choice=" + userChoice, "computer's choice=" + computerChoice, "user wins=" + winsCount, "user losses=" + lossesCount);
+        }
+        function changeImage(element)
+        {
+            var v = varImage.getAttribute("src");
+            if(v == "assets/images/nature-q-c-627-480-2.jpg") {
+                v = "assets/images/abstract-q-c-627-480-3.jpg";
+            } else {
+                v = "assets/images/nature-q-c-627-480-2.jpg";
+            }
+            varImage.setAttribute("src", v);
         }
     </script>
    </body>
