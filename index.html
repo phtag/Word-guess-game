@@ -15,8 +15,9 @@
       </header>
     <div class="container" >
         <div class="row my-row">
-            <div class="col-sm-6 my-border-column-left" onclick="changeImage(this);">
-                <img id="left-column-image" src='assets/images/nature-q-c-627-480-2.jpg' style="width: 100%" >
+                <!-- <div class="col-sm-6 my-border-column-left" onclick="changeImage(this);"> -->
+                <div class="col-sm-6 my-border-column-left">
+                    <img id="left-column-image" src='assets/images/nature-q-c-627-480-2.jpg' style="width: 100%" >
  
             </div>
             <div class="col-sm-6 my-border-column-right">
@@ -36,9 +37,14 @@
                         ["n", "e", "w", "", "y", "o", "r", "k"],
                         ["b", "o", "s", "t", "o", "n"],
                         ["a", "t", "l", "a", "n", "t", "a"]];
+        var UScityImages = ["chicago-illinois-skyline-skyscrapers-161963.jpeg",
+                            "new-york-city-pexels-photo-466685.jpeg",
+                            "boston-pexels-photo.jpg",
+                            "atlanta-1617318_1920.jpg"];
                                                   
         var gameChoices = ["r", "p", "s"];
-        var currentCity_userGuesses = [""];
+        var currentCity_array = [];
+        var currentCity_visibleLetters = [];
 
         var currentWord = document.getElementById("current-word");
         var winsText = document.getElementById("wins-text");
@@ -47,10 +53,6 @@
         var varImage = document.getElementById("left-column-image");
         var cityIndex = Math.floor(Math.random() * UScityNames.length);
          var numGuessesRemaining = 10;
-        currentWord.textContent="";
-        for (var j=0;j<UScityNames[cityIndex].length;j++) {
-            currentWord.textContent += "_ ";
-        }
         winsText.textContent = 0;
         guessesRemaining.textContent = numGuessesRemaining;
         lettersGuessed.textContent = "";
@@ -58,11 +60,16 @@
         var winsCount = 0;
         var lossesCount = 0;
         var tiesCount = 0;
-        
+        changeImage(cityIndex);
+        initializeCurrentCityDisplay();
+        updateCurrentCityDisplay();
         document.onkeyup = function(event) {
             var userChoice, computerChoice;
 
-             userChoice=event.key;
+            userChoice=event.key;
+            if (isLetterInCity(userChoice)) {
+                updateCurrentCityDisplay();
+            }
             numGuessesRemaining--;
             guessesRemaining.textContent = numGuessesRemaining;
             if (lettersGuessed.textContent === "") {
@@ -104,16 +111,41 @@
             winsText.textContent = winsCount;
             console.log("user's choice=" + userChoice, "computer's choice=" + computerChoice, "user wins=" + winsCount, "user losses=" + lossesCount);
         }
-        function changeImage(element)
+        function changeImage(imageIndex)
         {
-            var v = varImage.getAttribute("src");
-            if(v == "assets/images/nature-q-c-627-480-2.jpg") {
-                v = "assets/images/abstract-q-c-627-480-3.jpg";
-            } else {
-                v = "assets/images/nature-q-c-627-480-2.jpg";
-            }
-            varImage.setAttribute("src", v);
+            var newSource = "assets/images/" + UScityImages[imageIndex];
+            varImage.setAttribute("src", newSource);
         }
+
+        function initializeCurrentCityDisplay() {
+            currentCity_array = [];
+            for (var j=0;j<UScityNames[cityIndex].length;j++) {
+                currentCity_array[j] = UScityNames[cityIndex][j];
+                currentCity_visibleLetters[j] = false;
+            }
+         }
+         function updateCurrentCityDisplay() {
+            currentWord.textContent="";
+            for (var j=0;j<UScityNames[cityIndex].length;j++) {
+                if (currentCity_visibleLetters[j]) {
+                    currentWord.textContent += currentCity_array[j] + " ";                   
+                } else {
+                    currentWord.textContent += "_ ";
+                }
+             }
+         }
+
+         function isLetterInCity(letter) {
+            var result = false;
+ 
+            for (var i=0;i<UScityNames[cityIndex].length;i++) {
+                if (letter.toLowerCase() === UScityNames[cityIndex][i]) {
+                    currentCity_visibleLetters[i] = true;
+                    result = true;
+                }
+            }
+            return result;
+         }
     </script>
    </body>
 </html>

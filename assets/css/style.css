@@ -37,3 +37,11 @@
     border-bottom: 5px solid red;
     padding: 20px;
 }
+#current-word {
+    background-color: lightyellow;
+}
+
+#letters-guessed {
+    background-color:lightgreen;
+   
+}
