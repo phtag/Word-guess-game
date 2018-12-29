@@ -21,11 +21,12 @@
  
             </div>
             <div class="col-sm-6 my-border-column-right">
-                <h3>Press any key to start playing</h1>
+                <h2>Press any key to start playing</h2>
                 <div class="my-scoreboard-section">
                     <br>Wins: <span id="wins-text"><strong>...Nothing.</strong></span></br>
+                    <br>Losses: <span id="losses-text"><strong>...Nothing.</strong></span></br>
                     <br>Current city: </br>
-                    <span id="current-word"><strong>...Nothing.</strong></span></br>
+                    <span id="current-city"><strong>...Nothing.</strong></span></br>
                     <br>Number of guesses remaining:  <span id="guesses-remaining"><strong>...Nothing.</strong></span></br>
                     <br>Letters guessed: <span id="letters-guessed"><strong>...Nothing.</strong></span></br>
                  </div>                
@@ -34,7 +35,7 @@
     </div>
      <script>
         var UScityNames = [["c", "h", "i", "c", "a", "g", "o"],
-                        ["n", "e", "w", "", "y", "o", "r", "k"],
+                        ["n", "e", "w", "y", "o", "r", "k"],
                         ["b", "o", "s", "t", "o", "n"],
                         ["a", "t", "l", "a", "n", "t", "a"]];
         var UScityImages = ["chicago-illinois-skyline-skyscrapers-161963.jpeg",
@@ -45,70 +46,53 @@
         var gameChoices = ["r", "p", "s"];
         var currentCity_array = [];
         var currentCity_visibleLetters = [];
+        var currentCity_display = [];
 
-        var currentWord = document.getElementById("current-word");
+        var currentCity = document.getElementById("current-city");
         var winsText = document.getElementById("wins-text");
+        var lossesText = document.getElementById("losses-text");
         var guessesRemaining = document.getElementById("guesses-remaining");
         var lettersGuessed = document.getElementById("letters-guessed");
         var varImage = document.getElementById("left-column-image");
         var cityIndex = Math.floor(Math.random() * UScityNames.length);
-         var numGuessesRemaining = 10;
-        winsText.textContent = 0;
-        guessesRemaining.textContent = numGuessesRemaining;
-        lettersGuessed.textContent = "";
- 
+        var guessesRemainingCount = 10;
         var winsCount = 0;
         var lossesCount = 0;
-        var tiesCount = 0;
+        winsText.textContent = 0;
+        lossesText.textContent = 0;
+        guessesRemaining.textContent = guessesRemainingCount;
+        lettersGuessed.textContent = "";
+ 
         changeImage(cityIndex);
         initializeCurrentCityDisplay();
         updateCurrentCityDisplay();
         document.onkeyup = function(event) {
             var userChoice, computerChoice;
-
+ 
             userChoice=event.key;
+            if (userChoice == "Shift") {
+                return;
+            }
             if (isLetterInCity(userChoice)) {
                 updateCurrentCityDisplay();
             }
-            numGuessesRemaining--;
-            guessesRemaining.textContent = numGuessesRemaining;
-            if (lettersGuessed.textContent === "") {
-                lettersGuessed.textContent += userChoice;
+            if (currentCity.textContent.indexOf("_") >= 0) {
+                guessesRemainingCount--;
+                if (guessesRemainingCount==0) {
+                    lossesCount++;
+                }
+                guessesRemaining.textContent = guessesRemainingCount;
+                if (lettersGuessed.textContent === "") {
+                    lettersGuessed.textContent += userChoice;
+                } else {
+                    lettersGuessed.textContent += ", " + userChoice;
+                }
             } else {
-                lettersGuessed.textContent += ", " + userChoice;
-            }
-            computerChoice = gameChoices[Math.floor(Math.random() * gameChoices.length)];
-             if (userChoice == "r") {
-                if (computerChoice == "s") {
-                    winsCount++;
-                } else if (computerChoice == "r") {
-                    tiesCount++;
-                }
-                else if (computerChoice == "p") {
-                    lossesCount++;
-                }
-            }
-            else if (userChoice == "p") {
-                if (computerChoice == "s") {
-                    lossesCount++;
-                } else if (computerChoice == "r") {
-                    winsCount++;
-                }
-                else if (computerChoice == "p") {
-                    tiesCount++;
-                }
-            }
-            else if (userChoice == "s") {
-                if (computerChoice == "s") {
-                    tiesCount++;
-                } else if (computerChoice == "r") {
-                    lossesCount++;
-                }
-                else if (computerChoice == "p") {
-                    winsCount++;
-                }
+                winsCount++;
+                alert("You are a WINNER!!!");
             }
             winsText.textContent = winsCount;
+            lossesText.textContent = lossesCount;
             console.log("user's choice=" + userChoice, "computer's choice=" + computerChoice, "user wins=" + winsCount, "user losses=" + lossesCount);
         }
         function changeImage(imageIndex)
@@ -116,31 +100,37 @@
             var newSource = "assets/images/" + UScityImages[imageIndex];
             varImage.setAttribute("src", newSource);
         }
-
+        //____________________________________________________________
         function initializeCurrentCityDisplay() {
             currentCity_array = [];
+            currentCity_display = [];
             for (var j=0;j<UScityNames[cityIndex].length;j++) {
                 currentCity_array[j] = UScityNames[cityIndex][j];
-                currentCity_visibleLetters[j] = false;
-            }
-         }
-         function updateCurrentCityDisplay() {
-            currentWord.textContent="";
-            for (var j=0;j<UScityNames[cityIndex].length;j++) {
-                if (currentCity_visibleLetters[j]) {
-                    currentWord.textContent += currentCity_array[j] + " ";                   
+                if (UScityNames[cityIndex][j] != " ") {
+                    currentCity_display[j] = "_";
                 } else {
-                    currentWord.textContent += "_ ";
+                    currentCity_display[j] = " ";
                 }
-             }
+            }
+            console.log("Current city display=" + currentCity_display);
+            console.log("Current city=" + currentCity_array);
          }
-
+         //____________________________________________________________
+         function updateCurrentCityDisplay() {
+            var cityText="";
+            // for (var j=0;j<UScityNames[cityIndex].length;j++) {
+            for (var j=0;j<currentCity_display.length;j++) {
+                cityText += currentCity_display[j] + " ";
+            }
+            currentCity.textContent = cityText;
+            console.log("Current city context="+currentCity.textContent);
+         }
+         //____________________________________________________________
          function isLetterInCity(letter) {
             var result = false;
- 
             for (var i=0;i<UScityNames[cityIndex].length;i++) {
                 if (letter.toLowerCase() === UScityNames[cityIndex][i]) {
-                    currentCity_visibleLetters[i] = true;
+                    currentCity_display[i] = letter;
                     result = true;
                 }
             }
