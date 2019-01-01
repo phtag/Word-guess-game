@@ -62,6 +62,13 @@
         var guessesRemaining = document.getElementById("guesses-remaining");
         var lettersGuessed = document.getElementById("letters-guessed");
         var varImage = document.getElementById("left-column-image");
+        var cityIndex;
+        var guessesRemainingCount;
+        var winsCount;
+        var lossesCount;
+        var wordDividerCharacterPosition;
+
+        var cityIndex;
 
         //  Start the game from scratch
         resetGame();
@@ -101,21 +108,6 @@
             var newSource = "assets/images/" + UScityImages[imageIndex];
             varImage.setAttribute("src", newSource);
         }
-        //____________________________________________________________
-        function initializeCurrentCityDisplay_OLD() {
-            currentCity_array = [];
-            currentCity_display = [];
-            for (var j=0;j<UScityNames[cityIndex].length;j++) {
-                currentCity_array[j] = UScityNames[cityIndex][j];
-                if (UScityNames[cityIndex][j] != " ") {
-                    currentCity_display[j] = "_";
-                } else {
-                    currentCity_display[j] = " ";
-                }
-            }
-            console.log("Current city display=" + currentCity_display);
-            console.log("Current city=" + currentCity_array);
-         }
         //____________________________________________________________
         function initializeCurrentCityDisplay() {
             var currentCityWord = "";
@@ -177,11 +169,11 @@
          }
     //________________________________________________________________
     function initializeVariableValues() {
-        var cityIndex = Math.floor(Math.random() * UScityNames.length);
-        var guessesRemainingCount = 10;
-        var winsCount = 0;
-        var lossesCount = 0;
-        var wordDividerCharacterPosition = -1;
+        cityIndex = Math.floor(Math.random() * UScityNames.length);
+        guessesRemainingCount = 10;
+        winsCount = 0;
+        lossesCount = 0;
+        wordDividerCharacterPosition = -1;
 
         winsText.textContent = 0;
         lossesText.textContent = 0;
