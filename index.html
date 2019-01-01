@@ -55,6 +55,8 @@
         var currentCity_visibleLetters = [];
         var currentCity_display = [];
         var currentCity_display2 = [];
+        var guessedLetters = [];
+        var currentCityWords = [];
 
         var currentCity = document.getElementById("current-city");
         var currentCity2 = document.getElementById("current-city2");
@@ -127,35 +129,23 @@
          }
         //____________________________________________________________
         function initializeCurrentCityDisplay() {
-            var secondWord = false;
-            currentCity_array = [];
-            currentCity_array2 = [];
-            currentCity_display = [];
-            currentCity_display2 = [];
-            var currentUSCity = UScityNames2[cityIndex];
-            console.log("Current US city=" + currentUSCity);
-             for (var j=0;j<currentUSCity.length;j++) {
-                if (currentUSCity.charAt(j) == " ") {
-                    secondWord = true;
-                    wordDividerCharacterPosition = j;
-                    console.log("wordDividerCharacterPosition=" + wordDividerCharacterPosition);
-                }
-                else {
-                    if (!secondWord) {
-                        currentCity_array[j] = currentUSCity.charAt(j);
-                        currentCity_display[j] = "_";
-                    } else {
-                        currentCity_array2[j] = currentUSCity.charAt(j);
-                        currentCity_display2[j] = "_";
-                    }
+            var currentCityWord = "";
+            guessedLetters= [];
+            // load current city words array with the words from the current city
+            var currentCityWords = UScityNames2[cityIndex].split(" ");
+            for (i=0;i<currentCityWords.length;i++) {
+                currentCityWord = currentCityWords[i];
+                console.log("Current US city word=" + currentCityWord);
+
+                guessedLetters[i]="";
+                for (var j=0;j<currentCityWord.length;j++) {
+                    guessedLetters[i] += "_";
                 }
             }
-            console.log("Current city display=" + currentCity_display);
-            console.log("Current city=" + currentCity_array);
-         }
-
-         //____________________________________________________________
-         function updateCurrentCityDisplay_old() {
+            console.log("guessedLetters="+ guessedLetters);
+        }
+        //____________________________________________________________
+        function updateCurrentCityDisplay_old() {
             var cityText="";
             // for (var j=0;j<UScityNames[cityIndex].length;j++) {
             for (var j=0;j<currentCity_display.length;j++) {
@@ -166,17 +156,16 @@
          }
          //____________________________________________________________
          function updateCurrentCityDisplay() {
-            var cityText="";
-            var cityText2="";
-            for (var j=0;j<currentCity_display.length;j++) {
-                cityText += currentCity_display[j] + " ";
+            var currentWord;
+
+            currentCity.textContent = "";
+            for (i=0;i<guessedLetters.length;i++) {
+                currentWord = guessedLetters[i];
+                for (var j=0;j<currentWord.length;j++) {
+                    currentCity.textContent += currentWord.charAt(j) + " ";
+                }
             }
-            for (var j=0;j<currentCity_display2.length;j++) {
-                cityText2 += currentCity_display[j] + " ";
-            }
-            currentCity.textContent = cityText;
-            currentCity2.textContent = cityText;
-            console.log("Current city context="+currentCity.textContent);
+            console.log("updateCurrentCityDisplay: Current city context="+currentCity.textContent);
          }
          //____________________________________________________________
          function isLetterInCity_OLD(letter) {
@@ -192,16 +181,25 @@
          //____________________________________________________________
          function isLetterInCity(letter) {
             var result = false;
-            for (var i=0;i<UScityNames[cityIndex].length;i++) {
-                if (letter.toLowerCase() === UScityNames[cityIndex][i]) {
-                    if (i < wordDividerCharacterPosition) {
-                        currentCity_display[i] = letter;
+             var cityWords = UScityNames2[cityIndex].split(" ");
+            for (i=0;i<cityWords.length;i++) {
+                var reconstructedWord = "";
+                var guessedLettersWord = guessedLetters[i];
+                var currentCityWord = cityWords[i];
+                for (var j=0;j<currentCityWord.length;j++) {
+                    // if (letter.toLowerCase() === UScityNames[cityIndex][i]) {
+                    if (letter.toLowerCase() === currentCityWord.charAt(j)) {
+                        reconstructedWord += letter.toLowerCase();
+                        result = true;
+                        console.log("isLetterInCity: currentCity="+ currentCity + " letter="+letter + " currentCity_display="+ currentCity_display);
                     } else {
-                        currentCity_display2[i] = letter;
+                        reconstructedWord += guessedLettersWord.charAt(j);
                     }
-                    result = true;
                 }
+                // save the reconstructed word currently being displayed on the web page
+                guessedLetters[i] = reconstructedWord;
             }
+            console.log("isLetterInCity: reconstructedWord=" + reconstructedWord);
             return result;
          }
     </script>
