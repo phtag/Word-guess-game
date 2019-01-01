@@ -36,19 +36,16 @@
         </div>
     </div>
      <script>
-         var UScityNames2 = ["chicago",
+         var UScityNames = ["chicago",
                              "new york",
-                             "los angeles",
                              "boston",
-                             "atlanta"];
-        var UScityNames = [["c", "h", "i", "c", "a", "g", "o"],
-                        ["n", "e", "w", "", "y", "o", "r", "k"],
-                        ["b", "o", "s", "t", "o", "n"],
-                        ["a", "t", "l", "a", "n", "t", "a"]];
-        var UScityImages = ["chicago-illinois-skyline-skyscrapers-161963.jpeg",
+                             "atlanta",
+                             "los angeles"];
+         var UScityImages = ["chicago-illinois-skyline-skyscrapers-161963.jpeg",
                             "new-york-city-pexels-photo-466685.jpeg",
                             "boston-pexels-photo.jpg",
-                            "atlanta-1617318_1920.jpg"];
+                            "atlanta-1617318_1920.jpg",
+                            "losAngeles-1031706_1920.jpg"];
                                                   
         var gameChoices = ["r", "p", "s"];
         var currentCity_array = [];
@@ -65,19 +62,9 @@
         var guessesRemaining = document.getElementById("guesses-remaining");
         var lettersGuessed = document.getElementById("letters-guessed");
         var varImage = document.getElementById("left-column-image");
-        var cityIndex = Math.floor(Math.random() * UScityNames.length);
-        var guessesRemainingCount = 10;
-        var winsCount = 0;
-        var lossesCount = 0;
-        var wordDividerCharacterPosition = -1;
-        winsText.textContent = 0;
-        lossesText.textContent = 0;
-        guessesRemaining.textContent = guessesRemainingCount;
-        lettersGuessed.textContent = "";
- 
-        changeImage(cityIndex);
-        initializeCurrentCityDisplay();
-        updateCurrentCityDisplay();
+
+        //  Start the game from scratch
+        resetGame();
         document.onkeyup = function(event) {
             var userChoice, computerChoice;
  
@@ -88,7 +75,7 @@
             if (isLetterInCity(userChoice)) {
                 updateCurrentCityDisplay();
             }
-            if (currentCity.textContent.indexOf("_") >= 0) {
+            if ((currentCity.textContent.indexOf("_") >= 0) || (currentCity2.textContent.indexOf("_") >= 0)) {
                 guessesRemainingCount--;
                 if (guessesRemainingCount==0) {
                     lossesCount++;
@@ -101,6 +88,8 @@
                 }
             } else {
                 winsCount++;
+                //  Start the game from scratch
+                resetGame();
                 alert("You are a WINNER!!!");
             }
             winsText.textContent = winsCount;
@@ -132,7 +121,7 @@
             var currentCityWord = "";
             guessedLetters= [];
             // load current city words array with the words from the current city
-            var currentCityWords = UScityNames2[cityIndex].split(" ");
+            var currentCityWords = UScityNames[cityIndex].split(" ");
             for (i=0;i<currentCityWords.length;i++) {
                 currentCityWord = currentCityWords[i];
                 console.log("Current US city word=" + currentCityWord);
@@ -145,43 +134,27 @@
             console.log("guessedLetters="+ guessedLetters);
         }
         //____________________________________________________________
-        function updateCurrentCityDisplay_old() {
-            var cityText="";
-            // for (var j=0;j<UScityNames[cityIndex].length;j++) {
-            for (var j=0;j<currentCity_display.length;j++) {
-                cityText += currentCity_display[j] + " ";
-            }
-            currentCity.textContent = cityText;
-            console.log("Current city context="+currentCity.textContent);
-         }
-         //____________________________________________________________
-         function updateCurrentCityDisplay() {
+        function updateCurrentCityDisplay() {
             var currentWord;
 
             currentCity.textContent = "";
+            currentCity2.textContent = "";
             for (i=0;i<guessedLetters.length;i++) {
                 currentWord = guessedLetters[i];
                 for (var j=0;j<currentWord.length;j++) {
-                    currentCity.textContent += currentWord.charAt(j) + " ";
+                    if (i==0) {
+                        currentCity.textContent += currentWord.charAt(j) + " ";
+                    } else {
+                        currentCity2.textContent += currentWord.charAt(j) + " ";                       
+                    }
                 }
             }
             console.log("updateCurrentCityDisplay: Current city context="+currentCity.textContent);
          }
-         //____________________________________________________________
-         function isLetterInCity_OLD(letter) {
-            var result = false;
-            for (var i=0;i<UScityNames[cityIndex].length;i++) {
-                if (letter.toLowerCase() === UScityNames[cityIndex][i]) {
-                    currentCity_display[i] = letter;
-                    result = true;
-                }
-            }
-            return result;
-         }
-         //____________________________________________________________
+        //____________________________________________________________
          function isLetterInCity(letter) {
             var result = false;
-             var cityWords = UScityNames2[cityIndex].split(" ");
+             var cityWords = UScityNames[cityIndex].split(" ");
             for (i=0;i<cityWords.length;i++) {
                 var reconstructedWord = "";
                 var guessedLettersWord = guessedLetters[i];
@@ -202,6 +175,26 @@
             console.log("isLetterInCity: reconstructedWord=" + reconstructedWord);
             return result;
          }
-    </script>
+    //________________________________________________________________
+    function initializeVariableValues() {
+        var cityIndex = Math.floor(Math.random() * UScityNames.length);
+        var guessesRemainingCount = 10;
+        var winsCount = 0;
+        var lossesCount = 0;
+        var wordDividerCharacterPosition = -1;
+
+        winsText.textContent = 0;
+        lossesText.textContent = 0;
+        guessesRemaining.textContent = guessesRemainingCount;
+        lettersGuessed.textContent = "";
+    }
+    //__________________________________________________________
+    function resetGame() {
+        initializeVariableValues();
+        changeImage(cityIndex);
+        initializeCurrentCityDisplay();
+        updateCurrentCityDisplay();
+    }
+     </script>
    </body>
 </html>
