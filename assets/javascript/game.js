@@ -3,12 +3,26 @@
                         "new york",
                         "boston",
                         "atlanta",
-                        "los angeles"];
-                        var UScityImages = ["chicago-illinois-skyline-skyscrapers-161963.jpeg",
+                        "los angeles",
+                        "albuquerque",
+                        "seattle",
+                        "new orleans",
+                        "pittsburgh",
+                        "san francisco",
+                        "miami",
+                        "las vegas"];
+    var UScityImages = ["chicago-illinois-skyline-skyscrapers-161963.jpeg",
                         "new-york-city-pexels-photo-466685.jpeg",
                         "boston-pexels-photo.jpg",
                         "atlanta-1617318_1920.jpg",
-                        "losAngeles-1031706_1920.jpg"];
+                        "losAngeles-1031706_1920.jpg",
+                        "Albuquerque.jpg",
+                        "seattle-city-skyline-693502_1280.jpg",
+                        "new-orleans-mardi-gras-1176483_1280.jpg",
+                        "pittsburgh-996347_1920.jpg",
+                        "san-francisco-1630372_1920.jpg",
+                        "miami-cloudscape-967987_1920.jpg",
+                        "las-vegas-1128811_1920.jpg"];
                         
     var gameChoices = ["r", "p", "s"];
     var currentCity_array = [];
@@ -40,38 +54,39 @@
     //  Start the game
     resetGame();
     document.onkeyup = function(event) {
-    var userChoice, computerChoice;
+        var userChoice, computerChoice;
 
-    userChoice=event.key;
-    if (userChoice == "Shift") {
-    return;
+        userChoice=event.key;
+        if (userChoice == "Shift") {
+        return;
+        }
+        if (isLetterInCity(userChoice)) {
+            updateCurrentCityDisplay();
+        }
+        if ((currentCity.textContent.indexOf("_") >= 0) || (currentCity2.textContent.indexOf("_") >= 0)) {
+        guessesRemainingCount--;
+        if (guessesRemainingCount==0) {
+        lossesCount++;
+        alert("Sorry. No guesses remaining. Try again");
+        resetGame();
+        }
+        guessesRemaining.textContent = guessesRemainingCount;
+        if (lettersGuessed.textContent === "") {
+        lettersGuessed.textContent += userChoice;
+        } else {
+        lettersGuessed.textContent += ", " + userChoice;
+        }
+        } else {
+            winsCount++;
+            //  Start the game from scratch
+            resetGame();
+            alert("You are a WINNER!!!");
+        }
+        winsText.textContent = winsCount;
+        lossesText.textContent = lossesCount;
+        console.log("user's choice=" + userChoice, "computer's choice=" + computerChoice, "user wins=" + winsCount, "user losses=" + lossesCount);
     }
-    if (isLetterInCity(userChoice)) {
-        updateCurrentCityDisplay();
-    }
-    if ((currentCity.textContent.indexOf("_") >= 0) || (currentCity2.textContent.indexOf("_") >= 0)) {
-    guessesRemainingCount--;
-    if (guessesRemainingCount==0) {
-    lossesCount++;
-    alert("Sorry. No guesses remaining. Try again");
-    resetGame();
-    }
-    guessesRemaining.textContent = guessesRemainingCount;
-    if (lettersGuessed.textContent === "") {
-    lettersGuessed.textContent += userChoice;
-    } else {
-    lettersGuessed.textContent += ", " + userChoice;
-    }
-    } else {
-    winsCount++;
-    //  Start the game from scratch
-    resetGame();
-    alert("You are a WINNER!!!");
-    }
-    winsText.textContent = winsCount;
-    lossesText.textContent = lossesCount;
-    console.log("user's choice=" + userChoice, "computer's choice=" + computerChoice, "user wins=" + winsCount, "user losses=" + lossesCount);
-    }
+    //___________________________________________________________
     function changeImage(imageIndex)
     {
     var newSource = "assets/images/" + UScityImages[imageIndex];
