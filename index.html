@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Archivo" rel="stylesheet">
     <title>Word guess game</title>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-  </head>
+   </head>
   <body>
       <header class="my-header">
         Word Guess Game - US Cities
@@ -25,10 +26,10 @@
                 <div class="my-scoreboard-section">
                     <br>Wins: <span id="wins-text"><strong>...Nothing.</strong></span></br>
                     <br>Losses: <span id="losses-text"><strong>...Nothing.</strong></span></br>
-                    <br>Current city: </br>
+                    <br>City name to guess:
                     <span id="current-city"><strong>...Nothing.</strong></span>
                     <span id="current-city2"><strong>...Nothing.</strong></span>
-                <!-- </br> -->
+                </br>
                     <br>Number of guesses remaining:  <span id="guesses-remaining"><strong>...Nothing.</strong></span></br>
                     <br>Letters guessed: <span id="letters-guessed"><strong>...Nothing.</strong></span></br>
                  </div>                
@@ -70,7 +71,11 @@
 
         var cityIndex;
 
-        //  Start the game from scratch
+        // perform one-time initialization
+        winsCount = 0;
+        lossesCount = 0;
+
+        //  Start the game
         resetGame();
         document.onkeyup = function(event) {
             var userChoice, computerChoice;
@@ -86,6 +91,8 @@
                 guessesRemainingCount--;
                 if (guessesRemainingCount==0) {
                     lossesCount++;
+                    alert("Sorry. No guesses remaining. Try again");
+                    resetGame();
                 }
                 guessesRemaining.textContent = guessesRemainingCount;
                 if (lettersGuessed.textContent === "") {
@@ -170,11 +177,7 @@
     //________________________________________________________________
     function initializeVariableValues() {
         cityIndex = Math.floor(Math.random() * UScityNames.length);
-        guessesRemainingCount = 10;
-        winsCount = 0;
-        lossesCount = 0;
-        wordDividerCharacterPosition = -1;
-
+        guessesRemainingCount = 10; 
         winsText.textContent = 0;
         lossesText.textContent = 0;
         guessesRemaining.textContent = guessesRemainingCount;
