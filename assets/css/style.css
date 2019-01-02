@@ -52,3 +52,7 @@
     margin-right: 10px;
     margin-left: 10px;
 }
+#my-user-alert-button {
+    /* align-self: right; */
+    margin: auto;
+}

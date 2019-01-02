@@ -18,14 +18,14 @@
     <div class="container" >
         <div class="row my-row">
                 <!-- <div class="col-sm-6 my-border-column-left" onclick="changeImage(this);"> -->
-                <div class="col-sm-6 my-border-column-left">
-                    <img id="left-column-image" src='assets/images/nature-q-c-627-480-2.jpg' style="width: 100%" >
- 
-            </div>
+            <div class="col-sm-6 my-border-column-left">
+                <img id="left-column-image" src='assets/images/nature-q-c-627-480-2.jpg' style="width: 100%" >
+             </div>
             <div class="col-sm-6 my-border-column-right">
                 <h2>Press any key to start playing</h2>
                 <div class="my-scoreboard-section">
-                    <br>Wins: <span id="wins-text"><strong>...Nothing.</strong></span></br>
+                    <br>Wins: <span id="wins-text"><strong>...Nothing.</strong></span> 
+                    </br>
                     <br>Losses: <span id="losses-text"><strong>...Nothing.</strong></span></br>
                     <br>City name to guess:
                     <span id="current-city"><strong>...Nothing.</strong></span>
@@ -33,10 +33,20 @@
                 </br>
                     <br>Number of guesses remaining:  <span id="guesses-remaining"><strong>...Nothing.</strong></span></br>
                     <br>Letters guessed: <span id="letters-guessed"><strong>...Nothing.</strong></span></br>
-                 </div>                
+                  </div>                
             </div>
         </div>
+        <div class="row my-row">
+            <button id="my-user-alert-button">
+                My user alert button <span id="my-user-alert-button"></span>
+            </button>      
+        </div>
     </div>
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
      <script src="assets/javascript/game.js"></script>
      </script>
    </body>
