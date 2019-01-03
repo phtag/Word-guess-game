@@ -205,7 +205,7 @@
     function enableButton(buttonLabel) {
         myUserAlertButton.style.visibility = "visible";
         myUserAlertButton.innerText = buttonLabel;
-        waitingForReset = True;
+        waitingForReset = true;
         myUserAlertButton.onclick = function() {
             resetGame();
             return;

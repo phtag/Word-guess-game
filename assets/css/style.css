@@ -13,6 +13,12 @@
         background-color: rgb(82, 205, 236); 
         border: 5px solid yellow;
 }
+.my-scoreboard-header {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 20pt;
+    font-weight: bold;
+    color: red;
+}
 .my-row {
     margin-top: 30px;
 }
