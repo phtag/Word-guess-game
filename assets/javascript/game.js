@@ -23,6 +23,18 @@
                         "san-francisco-1630372_1920.jpg",
                         "miami-cloudscape-967987_1920.jpg",
                         "las-vegas-1128811_1920.jpg"];
+    var UScityNameHints = ["The windy city",
+                        "The big apple",
+                        "Beantown",
+                        "Gate city of the south",
+                        "Tinseltown",
+                        "The duke city",
+                        "Emerald city",
+                        "The big easy",
+                        "pittsburgh",
+                        "san francisco",
+                        "miami",
+                        "las vegas"];
                         
     var gameChoices = ["r", "p", "s"];
     var currentCity_array = [];
@@ -33,6 +45,7 @@
     var currentCityWords = [];
     var selectedCities = [];
 
+    //  web page element variables
     var currentCity = document.getElementById("current-city");
     var currentCity2 = document.getElementById("current-city2");
     var winsText = document.getElementById("wins-text");
@@ -41,6 +54,7 @@
     var lettersGuessed = document.getElementById("letters-guessed");
     var varImage = document.getElementById("left-column-image");
     var myUserAlertButton = document.getElementById("my-user-alert-button");
+    var cityPictureHintText = document.getElementById("city-picture-hint-text");
     var cityIndex;
     var guessesRemainingCount;
     var winsCount;
@@ -95,6 +109,7 @@
     {
         var newSource = "assets/images/" + UScityImages[imageIndex];
         varImage.setAttribute("src", newSource);
+        cityPictureHintText.textContent = UScityNameHints[imageIndex];
     }
     //____________________________________________________________
     function initializeCurrentCityDisplay() {

@@ -72,3 +72,14 @@
     /* align-self: right; */
     margin: auto;
 }
+#city-picture-hint {
+    margin: 20px;
+    font-size: 20pt;
+    font-weight: bold;
+    color: red;
+    text-align: center;
+}
+#city-picture-hint-text {
+    font-weight: normal;
+    color: black;
+}
