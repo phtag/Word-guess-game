@@ -55,6 +55,8 @@
     var varImage = document.getElementById("left-column-image");
     var myUserAlertButton = document.getElementById("my-user-alert-button");
     var cityPictureHintText = document.getElementById("city-picture-hint-text");
+
+    var audioElement = document.createElement("audio");
     var cityIndex;
     var guessesRemainingCount;
     var winsCount;
@@ -62,6 +64,9 @@
     var userButtonClicked;
 
     var cityIndex;
+
+    var lostGameMessage = "Sorry. You lost this game. Click to continue playing";
+    var wonGameMessage = "You are a WINNER!!! Click to continue playing";
 
     // perform one-time initialization
     initializeSessionVariables();
@@ -86,7 +91,7 @@
         if ((currentCity.textContent.indexOf("_") >= 0) || (currentCity2.textContent.indexOf("_") >= 0)) {
             if (guessesRemainingCount==0) {
                 lossesCount++;
-                enableButton("Sorry. You lost this game. Click to continue playing");
+                enableButton(lostGameMessage);
              }
             guessesRemaining.textContent = guessesRemainingCount;
             if (lettersGuessed.textContent === "") {
@@ -97,7 +102,7 @@
         } else {
             winsCount++;
             //  Start the game from scratch
-            enableButton("You are a WINNER!!! Click to continue playing");
+            enableButton(wonGameMessage);
         }
         winsText.textContent = winsCount;
         lossesText.textContent = lossesCount;
@@ -220,8 +225,16 @@
         myUserAlertButton.style.visibility = "visible";
         myUserAlertButton.innerText = buttonLabel;
         waitingForReset = true;
+        if (buttonLabel == wonGameMessage) {
+            audioElement.setAttribute("src", "assets/sounds/Audience_Applause-Matthiew11-1206899159.mp3");
+        } else {
+            audioElement.setAttribute("src", "assets/sounds/hahaha-Peter_De_Lang-1639076107.mp3");
+        }
+
+        audioElement.play();
         myUserAlertButton.onclick = function() {
             resetGame();
+            audioElement.pause();
             return;
         }
     }
