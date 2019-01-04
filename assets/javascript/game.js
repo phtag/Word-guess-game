@@ -56,6 +56,14 @@
     var myUserAlertButton = document.getElementById("my-user-alert-button");
     var cityPictureHintText = document.getElementById("city-picture-hint-text");
 
+    var audioElement_wonGame = document.createElement("audio");
+    audioElement_wonGame.setAttribute("src", "assets/sounds/Audience_Applause-Matthiew11-1206899159.mp3");
+    audioElement_wonGame.preload = "auto";
+
+    var audioElement_lostGame = document.createElement("audio");
+    audioElement_lostGame.setAttribute("src", "assets/sounds/Audience_Applause-Matthiew11-1206899159.mp3");
+    audioElement_lostGame.preload = "auto";
+
     var audioElement = document.createElement("audio");
     var cityIndex;
     var guessesRemainingCount;
@@ -226,11 +234,10 @@
         myUserAlertButton.innerText = buttonLabel;
         waitingForReset = true;
         if (buttonLabel == wonGameMessage) {
-            audioElement.setAttribute("src", "assets/sounds/Audience_Applause-Matthiew11-1206899159.mp3");
+            audioElement = audioElement_lostGame;
         } else {
-            audioElement.setAttribute("src", "assets/sounds/hahaha-Peter_De_Lang-1639076107.mp3");
+            audioElement = audioElement_lostGame;
         }
-
         audioElement.play();
         myUserAlertButton.onclick = function() {
             resetGame();
