@@ -61,7 +61,7 @@
     audioElement_wonGame.preload = "auto";
 
     var audioElement_lostGame = document.createElement("audio");
-    audioElement_lostGame.setAttribute("src", "assets/sounds/Audience_Applause-Matthiew11-1206899159.mp3");
+    audioElement_lostGame.setAttribute("src", "assets/sounds/hahaha-Peter_De_Lang-1639076107.mp3");
     audioElement_lostGame.preload = "auto";
 
     var audioElement = document.createElement("audio");
@@ -234,14 +234,14 @@
         myUserAlertButton.innerText = buttonLabel;
         waitingForReset = true;
         if (buttonLabel == wonGameMessage) {
-            audioElement = audioElement_lostGame;
+            audioElement = audioElement_wonGame;
         } else {
             audioElement = audioElement_lostGame;
         }
         audioElement.play();
         myUserAlertButton.onclick = function() {
-            resetGame();
             audioElement.pause();
+            resetGame();
             return;
         }
     }
