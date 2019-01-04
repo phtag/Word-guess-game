@@ -31,10 +31,10 @@
                         "The duke city",
                         "Emerald city",
                         "The big easy",
-                        "pittsburgh",
-                        "san francisco",
-                        "miami",
-                        "las vegas"];
+                        "Steel city",
+                        "Baghdad by the Bay",
+                        "Magic city",
+                        "Sin city"];
                         
     var gameChoices = ["r", "p", "s"];
     var currentCity_array = [];
@@ -80,14 +80,14 @@
         }
         if (isLetterInCity(userChoice)) {
             updateCurrentCityDisplay();
+        } else {
+            guessesRemainingCount--;
         }
         if ((currentCity.textContent.indexOf("_") >= 0) || (currentCity2.textContent.indexOf("_") >= 0)) {
-            guessesRemainingCount--;
             if (guessesRemainingCount==0) {
                 lossesCount++;
-                enableButton("Sorry. No guesses remaining. Click to continue playing");
-                // resetGame();
-            }
+                enableButton("Sorry. You lost this game. Click to continue playing");
+             }
             guessesRemaining.textContent = guessesRemainingCount;
             if (lettersGuessed.textContent === "") {
                 lettersGuessed.textContent += userChoice.toUpperCase();
@@ -97,7 +97,6 @@
         } else {
             winsCount++;
             //  Start the game from scratch
-            resetGame();
             enableButton("You are a WINNER!!! Click to continue playing");
         }
         winsText.textContent = winsCount;
@@ -195,9 +194,9 @@
             return;
         }         
         selectedCities[cityIndex]=true; // mark that this city has already been selected
-        guessesRemainingCount = 10; 
-        winsText.textContent = 0;
-        lossesText.textContent = 0;
+        guessesRemainingCount = 5; 
+        winsText.textContent = winsCount;
+        lossesText.textContent = lossesCount;
         guessesRemaining.textContent = guessesRemainingCount;
         lettersGuessed.textContent = "";
     }
