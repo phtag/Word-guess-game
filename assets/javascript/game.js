@@ -56,12 +56,14 @@
     var myUserAlertButton = document.getElementById("my-user-alert-button");
     var cityPictureHintText = document.getElementById("city-picture-hint-text");
 
-    var audioElement_wonGame = document.createElement("audio");
-    audioElement_wonGame.setAttribute("src", "assets/sounds/Audience_Applause-Matthiew11-1206899159.mp3");
+    // var audioElement_wonGame = document.createElement("audio");
+    var audioElement_wonGame = new Audio();
+    audioElement_wonGame.src = "assets/sounds/Audience_Applause-Matthiew11-1206899159.mp3";
     audioElement_wonGame.preload = "auto";
 
-    var audioElement_lostGame = document.createElement("audio");
-    audioElement_lostGame.setAttribute("src", "assets/sounds/hahaha-Peter_De_Lang-1639076107.mp3");
+    // var audioElement_lostGame = document.createElement("audio");
+    var audioElement_lostGame = new Audio();
+    audioElement_lostGame.src =  "assets/sounds/hahaha-Peter_De_Lang-1639076107.mp3";
     audioElement_lostGame.preload = "auto";
 
     var audioElement = document.createElement("audio");
@@ -238,6 +240,7 @@
         } else {
             audioElement = audioElement_lostGame;
         }
+        audioElement.currentTime=0;
         audioElement.play();
         myUserAlertButton.onclick = function() {
             audioElement.pause();
