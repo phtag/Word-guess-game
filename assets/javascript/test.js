@@ -3,3 +3,4 @@ var game = {
         return x*x;
     }
 }
+game.func1(10);
